@@ -1,6 +1,6 @@
 import ass2_read_data as main
 import enhanced
-# import basic
+import basic
 import numpy as np
 from sklearn import svm
 import json
