@@ -20,16 +20,15 @@ def calc_avg_time(timestamps):
         time_diff = timeB - timeA
         total_time_diff += time_diff
     avg = total_time_diff / (K-1)
-    minute, sec = divmod(avg.total_seconds(), 60)
-    return minute, sec
+    # minute, sec = divmod(avg.total_seconds(), 60)
+    return avg.total_seconds()
 
 
 def temporal(cascade):
     timestamps = []
     for i in range(1, K+1):
         timestamps.append(cascade[str(i)]['created_at'])
-    avg_min, avg_sec = calc_avg_time(timestamps)
-    return avg_min, avg_sec
+    return calc_avg_time(timestamps)
 
 if __name__ == '__main__':
     tr, ts = main.read_data(TR_PATH, TS_PATH)
@@ -37,6 +36,6 @@ if __name__ == '__main__':
     for url in tr:
         print(url)
         cascade = tr[url]
-        minute, sec = temporal(cascade)
-        print(str(minute) + ' min, ' + str(sec) + ' sec')
+        seconds = temporal(cascade)
+        print(str(seconds) + ' sec')
 
