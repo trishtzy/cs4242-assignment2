@@ -11,6 +11,7 @@ TR_PATH = 'dataset/k4/training.json'
 
 OUT_FILE = 'testing_online_prediction.json'
 
+# This is a pseudocode for classifer. Please change your parameters and function name accordingly.
 
 def write2json(data):
     with open(OUT_FILE, 'w') as f:
