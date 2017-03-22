@@ -30,10 +30,10 @@ def main():
     training_data = read_data.read_data(TR_PATH,100)
     logger.debug('Loading testing data '+TS_PATH)
     testing_data = read_data.read_data(TS_PATH)
-    logger.debug('Loading social network '+SN_PATH)
-    social_network = read_data.read_data(SN_PATH)
     logger.debug('Loading root tweets '+RT_PATH)
     root_data = read_data.read_data(RT_PATH)
+    logger.debug('Loading social network '+SN_PATH)
+    social_network = read_data.read_data(SN_PATH)
 
 
     # extract_labels

@@ -1,5 +1,8 @@
 import json
 import logging
+import os.path
+from dateutil.parser import parse
+import datetime
 
 # create logger
 logger = logging.getLogger('main.read_data')
@@ -8,6 +11,9 @@ logger = logging.getLogger('main.read_data')
 def read_data(path, limit=-1):
     """Given a path to JSON file, load and return contents up to limit items."""
     logger.debug("Reading " + path)
+    if (not os.path.isfile(path)):
+        logger.error("File " + path + " does not exist!")
+        return None
     with open(path, 'r') as f:
         data = json.load(f)
     logger.debug("Loaded %d items" % len(data))
@@ -18,7 +24,7 @@ def read_data(path, limit=-1):
     for d in data:
         new_data[d] = data[d]
         count += 1
-        if count > limit:
+        if count >= limit:
             return new_data
     return new_data
 
@@ -48,6 +54,22 @@ def extract_labels(dataset, k):
 
     return labels
 
+def parse_datetime(datetime_str):
+    """Takes in datetime string in format "1285421777000" or "Tue Aug 31 14:57:43 +0000 2010"
+    and returns datetime object"""
+    try:
+        return datetime.datetime.fromtimestamp(int(datetime_str)/1000)
+    except ValueError:
+        return parse(datetime_str)
+
+
+def json_datetime(obj):
+    """JSON serializer for datetime objects
+    Change this to the required format for outputting json for evaluation"""
+    if isinstance(obj, datetime.datetime):
+        serial = obj.isoformat()
+        return serial
+    raise TypeError ("Type not serializable")
 
 # if __name__ == '__main__':
 #     tr, ts = read_data('dataset/k4/training.json', 'dataset/k4/testing.json')
